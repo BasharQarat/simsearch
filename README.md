@@ -10,13 +10,15 @@ composer require basharqarat/simsearch
 
 lets talk about the function signature and response
 
-    Model::search($var1,$var2,$var3);
+    Model::search($var1,$var2,$var3,$var4);
 
 $var1(required) : is the string we searching about it .
 
 $var2(optional) : is array of relations models we want to search in it too ,and if it empty => the function will ignore it.
 
 $var3(optional) : is array of strings (if we want to search in defined columns) ,adn if it empty => the function will ignore it.
+
+$var4(optional) : is array and keys of expressions
 
 response : collection of model data ,or empty array.
 
@@ -34,8 +36,24 @@ in your models you want to search in it:
 
         public $mySearchableFields = [
             'name',
+            'fname',
+            'lname',
+            'phone_code',
+            'phone_number'
             'email',
         ];
+        
+        /**
+        * return array
+        */
+        public function getSearchableFields(){
+            return array_merge($this->mySearchableFields,
+                [
+                    \DB::raw('CONCAT(phone_code," ",phone_number)'),
+                    \DB::raw('CONCAT(fname," ",lname)')
+                ];
+           );
+        }
 
     }
 
@@ -43,7 +61,9 @@ in your models you want to search in it:
 
 2- add $mySearchableFields array and put inside it your columns name you want to search dynamically on It.
 
-3- now you can use it in your code.
+3- if you want to use expressions in with your fields like(concat(fname,'',lname)) so you should use the getSearchableFields() function in your model like the previuos
+
+4- now you can use it in your code.
 
 
 # logic
@@ -60,6 +80,12 @@ after the initiallizing a model.
 2- this will search in the user model in name column and ignored the $mySearchableFields
 
     User::search($search_key,[],['name',...])
+    ->get();
+    
+3- if you want to use expressios in defined query you should use unique doesnt declared in your model name in fields array like(full_name)
+and pass the expressions array parameter and declare the same name of the new declared name as key and the value its the expression
+
+    User::search($search_key,[],['full_name'],['full_name'=>\DB::raw('CONCAT(fname," ",lname)')])
     ->get();
 
 # search in relations too
@@ -159,6 +185,12 @@ and we still use defined columns with all the AnotherOneRelated_to_the_previous_
     User::search($search_key,['UserTypes.RelationInsideUserTypes'=>['firstRelationRelatedToRelationInsideUserTypesModel','secondRelationRelatedToRelationInsideUserTypesModel',..]])
     ->get();
 
+
+#note
+we can use the expressions with the relation too in all the previuos states
+    
+    User::search($search_key,['UserTypes:expression_name'],[],['expression_name'=>\DB::raw('any expression here...')])
+    ->get();
 
 
 
