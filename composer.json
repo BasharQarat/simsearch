@@ -1,0 +1,16 @@
+{
+    "name": "basharqarat/simsearch",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "BasharQarat\\Simsearch\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bashara Qarat",
+            "email": "bkbesho@gmail.com"
+        }
+    ],
+    "require": {}
+}
