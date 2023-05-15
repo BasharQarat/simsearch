@@ -1,6 +1,7 @@
 {
     "name": "basharqarat/simsearch",
     "type": "library",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "BasharQarat\\Simsearch\\": "src/"
@@ -12,8 +13,8 @@
             "email": "bkbesho@gmail.com"
         }
     ],
-    "require-dev": {},
-    "minimum-stability": "stable",
     "prefer-stable": true,
-    "require": {}
+    "require": {
+        "basharqarat/simsearch": "^1.0"
+    }
 }
