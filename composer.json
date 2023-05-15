@@ -12,5 +12,6 @@
             "email": "bkbesho@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
     "require": {}
 }
