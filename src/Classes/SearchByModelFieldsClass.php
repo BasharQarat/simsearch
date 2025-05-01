@@ -48,6 +48,8 @@ class SearchByModelFieldsClass
      */
     private function isRelation($field):bool
     {
+        if(is_a($field,Expression::class))
+            return false;
         return str_contains($field,'.');
     }
 
