@@ -2,6 +2,7 @@
 
 namespace BasharQarat\Simsearch\Classes;
 
+use Illuminate\Database\Query\Expression;
 
 class SearchByModelFieldsClass
 {
